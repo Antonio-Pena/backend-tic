@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model analysisModules {
+  id               String             @id
+  name             String
+  version          String
+  isActive         Boolean            @default(true)
+  moduleParameters moduleParameters[]
+}
+
+model parameters {
+  id               String             @id
+  name             String
+  moduleParameters moduleParameters[]
+}
+
+model moduleParameters {
+  module           analysisModules @relation(fields: [analysisModuleId], references: [id])
+  analysisModuleId String
+  parameter        parameters      @relation(fields: [parameterId], references: [id])
+  parameterId      String
+  value            String?
+
+  @@id([analysisModuleId, parameterId])
+}
+
+model setUpAnalysisModules {
+  id         String  @id
+  name       String
+  version    String
+  isActive   Boolean @default(true)
+  parameters Json[]
+}
