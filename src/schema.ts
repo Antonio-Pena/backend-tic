@@ -3,7 +3,10 @@ import { gql } from "apollo-server";
 export const typeDefs = gql`
   type Query {
     analysisModules: [AnalysisModule]
+    analysisModule(analysisModuleId: ID!): AnalysisModule
+    parameters: [Parameter]
     setUpAnalisisModules: [SetUpAnalysisModule]
+    setUpAnalysisModule(analysisModuleId: ID!): SetUpAnalysisModule
   }
   type AnalysisModule {
     id: ID!

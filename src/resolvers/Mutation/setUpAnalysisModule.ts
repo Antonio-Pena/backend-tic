@@ -28,7 +28,6 @@ export const setUpAnalysisModuleResolvers = {
     if (!analysisModuleFound) {
       return false;
     }
-    console.log(analysisModuleFound);
 
     await prisma.setUpAnalysisModules.create({
       data: {
