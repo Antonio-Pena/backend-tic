@@ -7,6 +7,8 @@ export const typeDefs = gql`
     parameters: [Parameter]
     setUpAnalisisModules: [SetUpAnalysisModule]
     setUpAnalysisModule(analysisModuleId: ID!): SetUpAnalysisModule
+    setUpPipelinesAssesment: [SetUpPipelineAssesment]
+    setUpPipelineAssesment(pipelineAssesmentId: ID!): SetUpPipelineAssesment
   }
   type AnalysisModule {
     id: ID!
@@ -49,6 +51,12 @@ export const typeDefs = gql`
     name: String!
     value: String!
   }
+  type SetUpPipelineAssesment {
+    id: ID!
+    name: String!
+    version: String!
+    isActive: Boolean!
+  }
 
   input CreateSetUpAnalysisModuleInput {
     analysisModuleId: ID!
@@ -59,6 +67,17 @@ export const typeDefs = gql`
     parameters: [SetUpParameterInput!]!
   }
 
+  input CreateSetUpPipelineAssesmentInput {
+    id: ID!
+    name: String!
+    version: String!
+  }
+  input UpdateSetUpPipelineAssesmentInput {
+    id: ID!
+    name: String
+    version: String
+  }
+
   type Mutation {
     analysisModuleCreate(input: CreateAnalysisModuleInput!): Boolean
     analysisModuleUpdate(input: UpdateAnalysisModuleInput!): Boolean
@@ -66,6 +85,13 @@ export const typeDefs = gql`
     setUpAnalysisModuleCreate(input: CreateSetUpAnalysisModuleInput!): Boolean
     setUpAnalysisModuleUpdate(input: UpdateSetUpAnalysisModuleInput!): Boolean
     setUpAnalysisModuleDelete(id: ID!): Boolean
+    setUpPipelineAssesmentCreate(
+      input: CreateSetUpPipelineAssesmentInput!
+    ): Boolean
+    setUpPipelineAssesmentUpdate(
+      input: UpdateSetUpPipelineAssesmentInput!
+    ): Boolean
+    setUpPipelineAssesmentDelete(id: ID!): Boolean
   }
 
   # enum Operator {

@@ -35,9 +35,27 @@ model moduleParameters {
 }
 
 model setUpAnalysisModules {
-  id         String  @id
-  name       String
-  version    String
-  isActive   Boolean @default(true)
-  parameters Json[]
+  id              String            @id
+  name            String
+  version         String
+  isActive        Boolean           @default(true)
+  parameters      Json[]
+  pipelineModules pipelineModules[]
+}
+
+model setUpPipelineAssesment {
+  id              String            @id
+  name            String
+  version         String
+  isActive        Boolean           @default(true)
+  pipelineModules pipelineModules[]
+}
+
+model pipelineModules {
+  setUpPipeline            setUpPipelineAssesment @relation(fields: [setUpPipelineAssesmentId], references: [id])
+  setUpPipelineAssesmentId String
+  setUpModule              setUpAnalysisModules   @relation(fields: [setUpAnalysisModuleId], references: [id])
+  setUpAnalysisModuleId    String
+
+  @@id([setUpPipelineAssesmentId, setUpAnalysisModuleId])
 }

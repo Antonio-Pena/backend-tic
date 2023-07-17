@@ -28,4 +28,18 @@ export const Query = {
       where: { id: analysisModuleId },
     });
   },
+  setUpPipelinesAssesment: (_: any, __: any, { prisma }: Context) => {
+    return prisma.setUpPipelineAssesment.findMany({
+      orderBy: [{ name: "asc" }],
+    });
+  },
+  setUpPipelineAssesment: (
+    _: any,
+    { pipelineAssesmentId }: { pipelineAssesmentId: string },
+    { prisma }: Context
+  ) => {
+    return prisma.setUpPipelineAssesment.findUnique({
+      where: { id: pipelineAssesmentId },
+    });
+  },
 };
