@@ -42,6 +42,7 @@ export const typeDefs = gql`
     version: String!
     isActive: Boolean!
     parameters: [SetUpParameter]
+    pipelineId: String
   }
   type SetUpParameter {
     name: String!
