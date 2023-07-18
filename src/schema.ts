@@ -61,6 +61,7 @@ export const typeDefs = gql`
   input CreateSetUpAnalysisModuleInput {
     analysisModuleId: ID!
     parameters: [SetUpParameterInput!]!
+    pipelineId: String!
   }
   input UpdateSetUpAnalysisModuleInput {
     id: ID!

@@ -6,6 +6,7 @@ interface setAnalysisModuleCreateArgs {
   input: {
     analysisModuleId: string;
     parameters: [{ name: string; value: string }];
+    pipelineId: string;
   };
 }
 interface setAnalysisModuleUpdateArgs {
@@ -21,20 +22,28 @@ export const setUpAnalysisModuleResolvers = {
     { input }: setAnalysisModuleCreateArgs,
     { prisma }: Context
   ): Promise<Boolean> => {
-    const { analysisModuleId, parameters } = input;
+    const { analysisModuleId, parameters, pipelineId } = input;
     const analysisModuleFound = await prisma.analysisModules.findFirst({
       where: { id: analysisModuleId },
     });
     if (!analysisModuleFound) {
       return false;
     }
+    const newSetUpAnalysisModuleId = uuid();
 
     await prisma.setUpAnalysisModules.create({
       data: {
-        id: uuid(),
+        id: newSetUpAnalysisModuleId,
         name: analysisModuleFound!.name,
         version: analysisModuleFound!.version,
         parameters,
+      },
+    });
+
+    await prisma.pipelineModules.create({
+      data: {
+        setUpPipelineAssesmentId: pipelineId,
+        setUpAnalysisModuleId: newSetUpAnalysisModuleId,
       },
     });
 
