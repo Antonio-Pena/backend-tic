@@ -94,6 +94,8 @@ export const typeDefs = gql`
       input: UpdateSetUpPipelineAssesmentInput!
     ): Boolean
     setUpPipelineAssesmentDelete(id: ID!): Boolean
+    runPipeline: Boolean
+    stopPipeline: Boolean
   }
 
   # enum Operator {
