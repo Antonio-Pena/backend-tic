@@ -94,7 +94,7 @@ export const typeDefs = gql`
       input: UpdateSetUpPipelineAssesmentInput!
     ): Boolean
     setUpPipelineAssesmentDelete(id: ID!): Boolean
-    runPipeline: Boolean
+    runPipeline(id: ID!): Boolean
     stopPipeline: Boolean
   }
 
