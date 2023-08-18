@@ -4,4 +4,32 @@ services:
     container_name: webserver
     image: nginx
     ports:
-      - '8080:80'
+      - '4003:4000'
+      - '8083:8080'
+  traffic_1:
+    container_name: tr01
+    image: cliip/platform:traffic_1.1
+    ports:
+      - '4001:4000'
+      - '8081:8080'
+    devices:
+      - /dev/bus/usb/003/001:/dev/bus/usb/003/001
+    volumes:
+      - ./config/filebeat.yml:/etc/filebeat/filebeat.yml:ro
+      - ./config/tr01/executor.config:/app/executor/executor.config:ro
+      - ./config/tr01/info.device:/app/analyze/static/info.device:ro
+      - /privapp/app/logs:/app/logging/log/
+  traffic_2:
+    container_name: tr02
+    image: cliip/platform:traffic_1.1
+    ports:
+      - '4002:4000'
+      - '8082:8080'
+    devices:
+      - /dev/bus/usb/003/002:/dev/bus/usb/003/002
+    volumes:
+      - ./config/filebeat.yml:/etc/filebeat/filebeat.yml:ro
+      - ./config/tr02/executor.config:/app/executor/executor.config:ro
+      - ./config/tr02/info.device:/app/analyze/static/info.device:ro
+      - /privapp/app/logs:/app/logging/log/
+    network_mode: '"bridge"'

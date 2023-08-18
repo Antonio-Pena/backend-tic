@@ -31,7 +31,6 @@ export const runStopPipelineResolvers = {
     const setUpAnalysisModules = await Promise.all(
       setUpAnalysisModulesInPipeline.map(modules)
     );
-    console.log("setUpAnalysisModules: ", setUpAnalysisModules);
 
     const modulesAux = setUpAnalysisModules
       .map((item) => {
@@ -52,10 +51,25 @@ export const runStopPipelineResolvers = {
       mod.parameters?.forEach((param) => {
         const paramAuxJson = JSON.stringify(param);
         const paramAux = JSON.parse(paramAuxJson);
-        if (paramAux.name === "ports") {
-          parameters[paramAux.name] = [paramAux.value];
-        } else {
-          parameters[paramAux.name] = paramAux.value;
+        const paramValue = paramAux.value as string;
+        const value = paramValue.split(" ");
+        switch (paramAux.name) {
+          case "ports":
+          case "volumes":
+          case "devices":
+          case "networks":
+            parameters[paramAux.name] = [...value];
+            break;
+
+          case "network_mode":
+            const valueAux = '"' + paramValue.toString() + '"';
+            console.log(valueAux);
+            parameters[paramAux.name] = valueAux;
+            break;
+
+          default:
+            parameters[paramAux.name] = paramAux.value;
+            break;
         }
       });
 
