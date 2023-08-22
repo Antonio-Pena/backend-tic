@@ -1,6 +1,6 @@
 import { exec } from "child_process";
 import { Context } from "../..";
-import { Prisma, pipelineModules } from "@prisma/client";
+import { pipelineModules } from "@prisma/client";
 import yaml from "write-yaml-file";
 
 async function writeToFile(fileName: string, data: any) {

@@ -1,4 +1,4 @@
-import { ApolloServer, gql } from "apollo-server";
+import { ApolloServer } from "apollo-server";
 import { typeDefs } from "./schema";
 import { Prisma, PrismaClient } from "@prisma/client";
 import { Mutation, Query, AnalysisModule } from "./resolvers";
