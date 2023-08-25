@@ -46,7 +46,7 @@ export const runStopPipelineResolvers = {
       .filter((item) => item.isActive);
 
     const services: any = {};
-    modulesAux?.forEach((mod) => {
+    modulesAux?.forEach((mod, i) => {
       const parameters: any = {};
       mod.parameters?.forEach((param) => {
         const paramAuxJson = JSON.stringify(param);
@@ -73,7 +73,11 @@ export const runStopPipelineResolvers = {
         }
       });
 
-      services[mod.name!] = parameters;
+      const serviceName =
+        i > 0 && modulesAux[i - 1].name === modulesAux[i].name
+          ? `${mod.name!}_${i + 1}`
+          : mod.name!;
+      services[serviceName] = parameters;
     });
 
     const data = {

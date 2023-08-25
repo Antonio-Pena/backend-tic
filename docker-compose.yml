@@ -1,12 +1,41 @@
-version: '1.5'
+version: '2'
 services:
-  traffic1:
-    image: nginx
-    container_name: traffic1
+  traffic:
+    image: cliip/platform:traffic1.12
+    container_name: tr01
+    volumes:
+      - ./config/filebeat.yml:/etc/filebeat/filebeat.yml:ro
+      - ./config/tr01/executor.config:/app/executor/executor.config:ro
+      - ./config/tr01/info.device:/app/analyze/static/info.device:ro
+      - /privapp/app/logs:/app/logging/log/
     ports:
-      - '8080:80'
-  traffic2:
+      - '4001:4000'
+      - '8081:8080'
+    devices:
+      - /dev/bus/usb/003/001:/dev/bus/usb/003/001
+  traffic_2:
+    image: cliip/platform:traffic1.12
+    container_name: tr02
+    volumes:
+      - ./config/filebeat.yml:/etc/filebeat/filebeat.yml:ro
+      - ./config/tr02/executor.config:/app/executor/executor.config:ro
+      - ./config/tr02/info.device:/app/analyze/static/info.device:ro
+      - /privapp/app/logs:/app/logging/log/
     ports:
-      - '8181:81'
-    container_name: traffic2
-    image: nginx
+      - '4002:4000'
+      - '8082:8080'
+    devices:
+      - /dev/bus/usb/003/002:/dev/bus/usb/003/002
+  traffic_3:
+    image: cliip/platform:traffic1.12
+    container_name: tr03
+    volumes:
+      - ./config/filebeat.yml:/etc/filebeat/filebeat.yml:ro
+      - ./config/tr03/executor.config:/app/executor/executor.config:ro
+      - ./config/tr03/info.device:/app/analyze/static/info.device:ro
+      - /privapp/app/logs:/app/logging/log/
+    ports:
+      - '4003:4000'
+      - '8083:8080'
+    devices:
+      - /dev/bus/usb/003/003:/dev/bus/usb/003/003
